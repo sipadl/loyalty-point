@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Auth;
+use Hash;
 
 class UserController extends Controller
 {
@@ -35,7 +38,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/'); // Redirect to intended URL after successful login
+            return redirect()->intended('/home'); // Redirect to intended URL after successful login
         }
 
         return back()->withErrors([
@@ -54,12 +57,15 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
+            'handphone' => 'required'
         ]);
 
+        // dd($request->all());
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'handphone' => $request->handphone
         ]);
 
         Auth::attempt($request->only('email', 'password'));

@@ -5,8 +5,13 @@
     <h1 class="my-4">Loyalty Points</h1>
 
     <div class="d-grid gap-2 mb-4">
-        <button class="btn btn-primary btn-lg" id="scanButton">
-            <i class="fas fa-barcode"></i> Scan Barcode
+        <div id="reader"></div>
+        <p id="result">Scanned result will appear here</p>
+        <button class="btn btn-primary" style="display: block" id="scanButton">
+            <i class="fas fa-qrcode"></i> Scan QR Code
+        </button>
+        <button class="btn btn-danger" style="display: none" id="stopButton">
+            <i class="fas fa-stop"></i> Stop Scanning
         </button>
     </div>
 
@@ -22,8 +27,8 @@
             <div id="historyList" style="max-height: 400px; overflow-y: auto;">
                 @foreach($history as $entry)
                 <div class="history-item">
-                    <span>{{ $entry['date'] }}</span>
-                    <span>{{ $entry['points'] }} points</span>
+                    <span>{{ $entry['created_at'] }}</span>
+                    <span>{{ $entry['point'] }} points</span>
                 </div>
                 @endforeach
             </div>
@@ -35,34 +40,24 @@
         </div>
     </div>
 </div>
-
-<!-- Modal for scanning barcode -->
-<div class="modal fade" id="scanModal" tabindex="-1" aria-labelledby="scanModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+{{-- <div class="modal fade" id="scannerModal" tabindex="-1" role="dialog" aria-labelledby="scannerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="scanModalLabel">Scan Barcode</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="scannerModalLabel">QR Code Scanner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <form id="scanForm" action="{{ route('loyalty.scan') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <input type="text" name="barcode" id="barcodeInput" class="form-control" placeholder="Scan barcode here" required>
-                    </div>
-                </form>
+                <div id="scanner-container" class="d-flex">
+                    <div id="reader"></div>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="document.getElementById('scanForm').submit();">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div>
-
-<script>
-document.getElementById('scanButton').addEventListener('click', function() {
-    new bootstrap.Modal(document.getElementById('scanModal')).show();
-});
-</script>
+</div> --}}
 @endsection

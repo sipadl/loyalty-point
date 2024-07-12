@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container d-flex justify-content-center">
-    <div class="card w-50 shadow">
+<div class="container-fluid d-flex justify-content-center">
+    <div class="card w-auto shadow">
         <div class="card-body">
             <div class="text-center mb-4">
                 <img src="https://via.placeholder.com/200x200" alt="Logo" width="150">
@@ -32,12 +32,12 @@
                 </div>
 
                 <div class="form-group mt-3">
-                    <button type="submit" class="btn btn-primary btn-block">{{ __('Login') }}</button>
+                    <button type="submit" class="btn btn-primary btn-block w-100">{{ __('Login') }}</button>
                 </div>
             </form>
-
+            {{-- <a href="{{ route('register') }}" class="btn btn-primary btn-block w-100 mt-1">Register</a> --}}
             <div class="text-center mt-3">
-                <p>Belum punya akun? <a href="{{ route('register') }}">Register sekarang</a></p>
+                <small>Belum punya akun? <a href="{{ route('register') }}">Register sekarang</a></small>
             </div>
         </div>
     </div>

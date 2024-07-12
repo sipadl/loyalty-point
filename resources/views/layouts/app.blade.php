@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Loyalty Points</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
     <style>
+        #html5-qrcode-button-camera-stop{
+            display:none !important;
+        }
         body {
             background-color: #f8f9fa;
             padding-bottom: 70px; /* Space for the bottom navbar */
@@ -76,4 +81,43 @@
         @endauth
     </div>
 </body>
+<footer>
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    let html5QrcodeScanner;
+        let isScanning = false;
+
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the result here
+            document.getElementById('result').innerText = `Scanned result: ${decodedText}`;
+        }
+
+        function onScanFailure(error) {
+            // handle scan failure, usually better to ignore and keep scanning.
+        }
+
+        document.getElementById('scanButton').addEventListener('click', () => {
+            document.getElementById('stopButton').style.display = 'block';
+            document.getElementById('scanButton').style.display = 'none';
+            if (!isScanning) {
+                isScanning = true;
+                html5QrcodeScanner = new Html5QrcodeScanner(
+                    "reader", { fps: 10, qrbox: 250 });
+                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+            }
+        });
+
+        document.getElementById('stopButton').addEventListener('click', () => {
+            document.getElementById('scanButton').style.display = 'block';
+            document.getElementById('stopButton').style.display = 'none';
+            if (isScanning) {
+                isScanning = false;
+                html5QrcodeScanner.clear();
+            }
+        });
+</script>
 </html>

@@ -10,8 +10,8 @@
             <div>
                 @foreach($history as $entry)
                     <div class="history-item">
-                        <span>{{ $entry['date'] }}</span>
-                        <span>{{ $entry['points'] }} points</span>
+                        <span>{{ $entry['created_at'] }}</span>
+                        <span>{{ $entry['point'] }} points</span>
                     </div>
                 @endforeach
             </div>
